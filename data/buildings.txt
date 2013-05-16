@@ -1,0 +1,43 @@
+===============================================
+Title		Buildings in the Vicariate of San Jose de Trozo and surrounding cities/municipalities
+
+Abstract	Footprints of buildings in the Vicariate of San Jose de Trozo and surrounding cities/municipalities
+                
+                Digitized through OpenStreetMap.org
+		Attributes of buildings gathered through field mapping.
+
+Keywords	Vicariate of San Jose de Trozo, Quiapo, building, building footprint
+
+Identifier	
+
+Series		
+
+Publisher	OpenStreetMap.org
+
+Originator	
+		
+
+Email		
+Publication Date 
+
+License	    	 Open Data Commons Open Database License (ODbL)
+		
+Extents      	 xMin,yMin 120.945,14.5414 : xMax,yMax 120.042,14.6385
+(EPSG:4326)
+
+Projection	 +proj=longlat +datum=WGS84 +no_defs
+
+Format	 	 ESRI Shapefile
+
+URI	 	 http://www.essc.org.ph
+
+Scale		 
+
+Data Layers	 
+
+Changelog	Extracted on 2013-04-15 02:00
+
+
+Distribution	
+
+================================================
