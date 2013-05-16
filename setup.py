@@ -16,7 +16,7 @@ setup(
     install_requires=[
                       'Django',
                       'django-leaflet',
-                      'django-bootstrap',
+                      'pinax-theme-bootstrap',
                    ],
     packages=find_packages(),
     include_package_data = True,
