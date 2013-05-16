@@ -1,3 +1,7 @@
+{% extends "site_base.html" %}
+
+{% block body %}
+<h2>Layers</h2>
 {% if layers %}
     <ul>
     {% for layer in layers %}
@@ -7,3 +11,5 @@
 {% else %}
     <p>No layers are available.</p>
 {% endif %}
+
+{% endblock %}
