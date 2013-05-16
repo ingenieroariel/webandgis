@@ -1,8 +1,10 @@
 from django.db import models
 from django.dispatch import receiver
 from django.conf import settings
+from django.contrib.gis.gdal import DataSource
 import zipfile
 import os, errno
+import glob
 
 
 class Layer(models.Model):
@@ -11,6 +13,7 @@ class Layer(models.Model):
     slug = models.SlugField()
     bbox = models.CharField(max_length=255, null=True, blank=True)
     original = models.FileField(upload_to='uploads', null=True, blank=True, help_text='Zip file with either geotiff and projection or shapefiles and friends')
+#    type = models.CharField(max_length=255)
 
 
     def __unicode__(self):
@@ -50,8 +53,20 @@ def layer_handler(sender, instance, *args, **kwargs):
     fh.close()
  
     # Check if it is vector or raster
+    # if it has a .shp file, it is vector :)
+    os.chdir(zip_out)
+    shapefiles = glob.glob('*.shp') 
 
-    # Use ogr to inspect the file and get the bounding box
-    instance.bbox = '0,0,0,0'
+    if len(shapefiles) > 0:
+        # this means it is a vector
+
+        # FIXME(This is a very weak way to get the shapefile)
+        shapefile = shapefiles[0]
+
+        # Use ogr to inspect the file and get the bounding box
+        ds = DataSource(shapefile)
+        layer = ds[0]
+        extent = layer.extent.tuple
+        instance.bbox = ",".join(["%s" % x for x in extent])
 
     # Render the tiles (if possible)

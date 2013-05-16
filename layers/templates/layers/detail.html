@@ -19,6 +19,11 @@
     function layermapInit(map, bounds) {
         var stamen = new L.StamenTileLayer("watercolor");
         stamen.addTo(map);
+
+        var bbox = [{{ layer.bbox }}];
+
+        // Read Leaflet documentation to be able to set the bounding box
+        //map.setBounds(bbox);
     }
 </script>
 {% endblock %}
