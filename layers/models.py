@@ -1,4 +1,6 @@
 from django.db import models
+from django.dispatch import receiver
+
 
 class Layer(models.Model):
     name = models.CharField(max_length=255)
@@ -12,17 +14,17 @@ class Layer(models.Model):
         return self.name
 
 
-@receiver(pre_save, sender=Layer)
-def layer_handler(sender, **kwargs):
+@receiver(models.signals.pre_save, sender=Layer)
+def layer_handler(sender, instance, *args, **kwargs):
     """Post process the uploaded layer
 
        Get the bounding box information and save it with the model
     """
     # Unzip the file
-
+    #import ipdb;ipdb.set_trace()
     # Check if it is vector or raster
 
     # Use ogr to inspect the file and get the bounding box
-    sender.bbox = '0,0,0,0'
+    instance.bbox = '0,0,0,0'
 
     # Render the tiles (if possible)
