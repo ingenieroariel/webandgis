@@ -1,0 +1,45 @@
+===============================================
+Title		100 year Flood Model in Manila
+
+Abstract	This is a raster flood model of Manila 
+		from the http://noah.dost.gov.ph/ and
+                http://nababaha.com/
+                
+                Original data are KML vectors transformed to ESRI Shapefile and
+                GeoTiff raster.
+                Flood height at 0.5, 1.5 and above 1.5 meters interval.
+               
+		
+Keywords	Manila, flood, Project NOAH
+
+Identifier	
+
+Series		
+
+Publisher	Project NOAH
+
+Originator	
+
+Email		
+
+Publication Date 
+
+License	    	 
+
+Extents      	xMin,yMin 120.933068,14.412392 :  xMax,yMax 121.127751,14.775857
+(EPSG:4326)
+
+Projection	 +proj=longlat +datum=WGS84 +no_defs
+
+Format	 	 ESRI Shapefile, GeoTiff
+
+URI	 	 http://noah.dost.gov.ph
+
+Scale		 
+
+Data Layers	 flood_100yr
+               
+Changelog        2013-05-14
+
+Distribution    Training purposes
+================================================
