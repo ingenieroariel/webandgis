@@ -1,0 +1,9 @@
+{% if layers %}
+    <ul>
+    {% for layer in layers %}
+        <li><a href="{% url 'layers:detail' layer.name %}">{{ layer.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No layers are available.</p>
+{% endif %}

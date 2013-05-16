@@ -103,6 +103,7 @@ ROOT_URLCONF = 'webandgis.urls'
 WSGI_APPLICATION = 'webandgis.wsgi.application'
 
 TEMPLATE_DIRS = (
+    '/home/projectnoah/django/webandgis/templates'
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -117,7 +118,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
-
     'layers',
 )
 
