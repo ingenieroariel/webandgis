@@ -9,10 +9,9 @@ Installation instructions
 
 In the root of the project, do:
 
- #. sudo pip install -e .
- #. python manage.py syncdb
- #. python manage.py runserver
- #. Navigate to http://localhost:8000/
+```
+ sudo pip install -e .
+```
 
 -----------------------------
 Optional softwares to install
