@@ -1,4 +1,7 @@
 # Django settings for webandgis project.
+import os
+
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -12,7 +15,7 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'webandgis.db',
+        'NAME': os.path.join(PROJECT_ROOT, 'webandgis.db'),
     }
 }
 
@@ -103,7 +106,7 @@ ROOT_URLCONF = 'webandgis.urls'
 WSGI_APPLICATION = 'webandgis.wsgi.application'
 
 TEMPLATE_DIRS = (
-    '/home/projectnoah/django/webandgis/templates'
+    os.path.join(PROJECT_ROOT, 'templates')
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
