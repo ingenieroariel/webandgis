@@ -5,7 +5,7 @@
 {% if layers %}
     <ul>
     {% for layer in layers %}
-        <li><a href="{% url 'layers:detail' layer.name %}">{{ layer.name }}</a></li>
+        <li><a href="{% url 'layers:detail' layer.slug %}">{{ layer.name }}</a></li>
     {% endfor %}
     </ul>
 {% else %}
