@@ -27,6 +27,13 @@
         var bbox = [{{ layer.bbox }}];
         var bounds = [[bbox[1], bbox[0]], [bbox[3], bbox[2]]];
         map.fitBounds(bounds);
+        var polygon = L.polygon([
+                      [bbox[1], bbox[0]],
+		      [bbox[3], bbox[0]],
+                      [bbox[3], bbox[2]],
+                      [bbox[1], bbox[2]],
+		      
+        ]).addTo(map);
     }
 </script>
 {% endblock %}
