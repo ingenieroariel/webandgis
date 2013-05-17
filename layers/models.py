@@ -39,6 +39,9 @@ def layer_handler(sender, instance, *args, **kwargs):
     Get the bounding box information and save it with the model
     """
  
+    instance.slug = slugify(instance.name)
+    zip_path = instance.original.path
+
     # Make a folder with the slug name
     # and create a 'raw' subdirectory to hold the files
     layer_folder = os.path.join(settings.MEDIA_ROOT, 'layers', instance.slug)

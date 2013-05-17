@@ -21,9 +21,8 @@
         stamen.addTo(map);
 
         var bbox = [{{ layer.bbox }}];
-
-        // Read Leaflet documentation to be able to set the bounding box
-        //map.setBounds(bbox);
+        var bounds = [[bbox[1], bbox[0]], [bbox[3], bbox[2]]];
+        map.fitBounds(bounds);
     }
 </script>
 {% endblock %}
