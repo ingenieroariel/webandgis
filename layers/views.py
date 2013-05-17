@@ -4,6 +4,10 @@ from django.shortcuts import render, get_object_or_404
 from layers.models import Layer
 from django.conf import settings
 from safe.api import read_layer
+from safe.api import calculate_impact
+from safe.impact_functions.inundation.flood_OSM_building_impact import FloodBuildingImpactFunction
+from subprocess import call
+
 import glob
 import os
 
@@ -24,13 +28,35 @@ def get_layer_data(layer_name):
      layer_file = os.path.join(layer_path, filename)
      return read_layer(layer_file)
 
+
 def calculate(request):
-     """Calculates the buildings affected by flood.
-     """
-     buildings = get_layer_data('Buildings')
-     flood = get_layer_data('Flood')
-     return HttpResponse('<ul><li>' 
-                         + buildings.filename
-                         + '</li><li>'
-                         + flood.filename
-                         + '</li></ul>')
+    """Calculates the buildings affected by flood.
+    """
+
+    output = os.path.join(settings.MEDIA_ROOT, 'layers', 'impact.json')
+
+    if not os.path.exists(output):
+
+        buildings = get_layer_data('Buildings')
+        flood = get_layer_data('Flood')
+
+        # assign the required keywords for inasafe calculations
+        buildings.keywords['category'] = 'exposure'
+        buildings.keywords['subcategory'] = 'structure'
+        flood.keywords['category'] = 'hazard'
+        flood.keywords['subcategory'] = 'flood'
+
+        impact_function = FloodBuildingImpactFunction
+        # run analisys
+        impact_file = calculate_impact(layers=[buildings, flood], impact_fcn=impact_function)
+
+
+        call(['ogr2ogr', '-f', 'GeoJSON',
+              output, impact_file.filename])
+
+    impact_geojson = os.path.join(settings.MEDIA_URL, 'layers', 'impact.json')
+
+    context = { 'impact': impact_geojson }
+    return render(request, 'layers/calculate.html', context)
+
+
