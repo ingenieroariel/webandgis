@@ -37,3 +37,6 @@ nosetests.xml
 # django testing database
 webandgis.db
 uploads
+
+# Extracted .zip files
+media/
