@@ -13,7 +13,9 @@ class Layer(models.Model):
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(editable=False)
     bbox = models.CharField(max_length=255, null=True, blank=True)
-    original = models.FileField(upload_to='uploads', null=True, blank=True, help_text='Zip file with either geotiff and projection or shapefiles and friends')
+    original = models.FileField(upload_to='uploads', null=True, blank=True,
+                                help_text="""Zip file with either geotiff and
+                                        projection or shapefiles and friends""")
 #    type = models.CharField(max_length=255)
     style = models.TextField(null=True, blank=True)
 
