@@ -21,7 +21,10 @@ If you have inasafe already installed in qgis, you can do the following to enabl
 
 ```
 sudo ln -s ~/.qgis/python/plugins/inasafe/safe /usr/lib/python2.7/dist-packages/safe
+sudo ln -s ~/.qgis/python/plugins/inasafe/third_party /usr/lib/python2.7/dist-packages/third_party
 ```
+
+Note: If you run those commands twice, an extra folder may be created and you will get import errors.
 
 -----------------------------
 Optional softwares to install
