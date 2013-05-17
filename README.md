@@ -13,6 +13,16 @@ In the root of the project, do:
  sudo pip install -e .
 ```
 
+------------------
+Inasafe workaround
+------------------
+
+If you have inasafe already installed in qgis, you can do the following to enable it's use from python scripts:
+
+```
+sudo ln -s ~/.qgis/python/plugins/inasafe/safe /usr/lib/python2.7/dist-packages/safe
+```
+
 -----------------------------
 Optional softwares to install
 -----------------------------
