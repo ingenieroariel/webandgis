@@ -7,6 +7,10 @@
 
 <p>{{ layer.description }}</p>
 
+<p>
+    <a href={{ layer.original.url }}>Download layer</a>
+</p>
+
 {% leaflet_map "layermap" %}
 
 {% endblock %}
