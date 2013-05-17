@@ -7,7 +7,6 @@ import os, errno
 import glob
 from django.template.defaultfilters import slugify
 
-
 class Layer(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
@@ -31,46 +30,47 @@ def create_folder(path):
             pass
         else: raise
 
-# @receiver(models.signals.pre_save, sender=Layer)
-# def layer_handler(sender, instance, *args, **kwargs):
-#     """Post process the uploaded layer
-
-#        Get the bounding box information and save it with the model
-#     """
-#     zip_path = instance.original.path
+@receiver(models.signals.pre_save, sender=Layer)
+def layer_handler(sender, instance, *args, **kwargs):
+    """
+    Post process the uploaded layer
+    Get the bounding box information and save it with the model
+    """
  
+    # Make a folder with the slug name
+    # and create a 'raw' subdirectory to hold the files
+    layer_folder = os.path.join(settings.MEDIA_ROOT, 'layers', instance.slug)
+    create_folder(layer_folder)
+    zip_out = os.path.join(layer_folder, 'raw')
+    create_folder(zip_out)
 
-#     # Make a folder with the slug name
-#     # and create a 'raw' subdirectory to hold the files
-#     layer_folder = os.path.join(settings.MEDIA_ROOT, 'layers', instance.slug)
-#     create_folder(layer_folder)
-#     zip_out = os.path.join(layer_folder, 'raw')
-#     create_folder(zip_out)
+    # Iterate over the files in the zip and create them in the raw folder.
+    split_zip_path = instance.original.path.rsplit('/', 1)
+    zip_path = os.path.join(split_zip_path[0], 'uploads', split_zip_path[1])
 
-#     # Iterate over the files in the zip and create them in the raw folder.
-#     fh = open(zip_path, 'rb')
-#     z = zipfile.ZipFile(fh)
-#     for name in z.namelist():
-#         outfile = open(os.path.join(zip_out, name), 'wb')
-#         outfile.write(z.read(name))
-#         outfile.close()
-#     fh.close()
+    fh = open(zip_path, 'rb')
+    z = zipfile.ZipFile(fh)
+    for name in z.namelist():
+        outfile = open(os.path.join(zip_out, name), 'wb')
+        outfile.write(z.read(name))
+        outfile.close()
+    fh.close()
  
-#     # Check if it is vector or raster
-#     # if it has a .shp file, it is vector :)
-#     os.chdir(zip_out)
-#     shapefiles = glob.glob('*.shp') 
+    # Check if it is vector or raster
+    # if it has a .shp file, it is vector :)
+    os.chdir(zip_out)
+    shapefiles = glob.glob('*.shp') 
 
-#     if len(shapefiles) > 0:
-#         # this means it is a vector
+    if len(shapefiles) > 0:
+        # this means it is a vector
 
-#         # FIXME(This is a very weak way to get the shapefile)
-#         shapefile = shapefiles[0]
+        # FIXME(This is a very weak way to get the shapefile)
+        shapefile = shapefiles[0]
 
-#         # Use ogr to inspect the file and get the bounding box
-#         ds = DataSource(shapefile)
-#         layer = ds[0]
-#         extent = layer.extent.tuple
-#         instance.bbox = ",".join(["%s" % x for x in extent])
+        # Use ogr to inspect the file and get the bounding box
+        ds = DataSource(shapefile)
+        layer = ds[0]
+        extent = layer.extent.tuple
+        instance.bbox = ",".join(["%s" % x for x in extent])
 
-#     # Render the tiles (if possible)
+    # Render the tiles (if possible)
