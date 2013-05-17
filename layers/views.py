@@ -35,28 +35,26 @@ def calculate(request):
 
     output = os.path.join(settings.MEDIA_ROOT, 'layers', 'impact.json')
 
-    if not os.path.exists(output):
+    buildings = get_layer_data('Buildings')
+    flood = get_layer_data('Flood')
 
-        buildings = get_layer_data('Buildings')
-        flood = get_layer_data('Flood')
+    # assign the required keywords for inasafe calculations
+    buildings.keywords['category'] = 'exposure'
+    buildings.keywords['subcategory'] = 'structure'
+    flood.keywords['category'] = 'hazard'
+    flood.keywords['subcategory'] = 'flood'
 
-        # assign the required keywords for inasafe calculations
-        buildings.keywords['category'] = 'exposure'
-        buildings.keywords['subcategory'] = 'structure'
-        flood.keywords['category'] = 'hazard'
-        flood.keywords['subcategory'] = 'flood'
-
-        impact_function = FloodBuildingImpactFunction
-        # run analisys
-        impact_file = calculate_impact(layers=[buildings, flood], impact_fcn=impact_function)
+    impact_function = FloodBuildingImpactFunction
+    # run analisys
+    impact_file = calculate_impact(layers=[buildings, flood], impact_fcn=impact_function)
 
 
-        call(['ogr2ogr', '-f', 'GeoJSON',
-              output, impact_file.filename])
+    call(['ogr2ogr', '-f', 'GeoJSON',
+          output, impact_file.filename])
 
     impact_geojson = os.path.join(settings.MEDIA_URL, 'layers', 'impact.json')
 
-    context = { 'impact': impact_geojson }
+    context = impact_file.keywords
+    context['geojson'] = impact_geojson
+
     return render(request, 'layers/calculate.html', context)
-
-

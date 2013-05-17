@@ -34,6 +34,8 @@ def create_folder(path):
             pass
         else: raise
 
+
+
 @receiver(models.signals.pre_save, sender=Layer)
 def layer_handler(sender, instance, *args, **kwargs):
     """
