@@ -38,5 +38,5 @@ sudo apt-get install sublime-text-2-dev
 2. Git-gui
 
 ```
-sudo apt get install git-gui
+sudo apt-get install git-gui
 ```
