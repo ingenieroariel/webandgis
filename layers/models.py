@@ -2,6 +2,7 @@ from django.db import models
 from django.dispatch import receiver
 from django.conf import settings
 from django.contrib.gis.gdal import DataSource
+from django.template.defaultfilters import slugify
 import zipfile
 import os, errno
 import glob
@@ -14,6 +15,7 @@ class Layer(models.Model):
     bbox = models.CharField(max_length=255, null=True, blank=True)
     original = models.FileField(upload_to='uploads', null=True, blank=True, help_text='Zip file with either geotiff and projection or shapefiles and friends')
 #    type = models.CharField(max_length=255)
+    style = models.TextField(null=True, blank=True)
 
     def __unicode__(self):
         return self.name
@@ -55,7 +57,7 @@ def layer_handler(sender, instance, *args, **kwargs):
         outfile.write(z.read(name))
         outfile.close()
     fh.close()
- 
+     
     # Check if it is vector or raster
     # if it has a .shp file, it is vector :)
     os.chdir(zip_out)
