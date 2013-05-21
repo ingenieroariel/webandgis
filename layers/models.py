@@ -50,16 +50,11 @@ def layer_handler(sender, instance, *args, **kwargs):
     create_folder(zip_out)
 
     # Iterate over the files in the zip and create them in the raw folder.
-    split_zip_path = instance.original.path.rsplit('/', 1)
-    zip_path = os.path.join(split_zip_path[0], 'uploads', split_zip_path[1])
-
-    fh = open(zip_path, 'rb')
-    z = zipfile.ZipFile(fh)
+    z = zipfile.ZipFile(instance.original)
     for name in z.namelist():
         outfile = open(os.path.join(zip_out, name), 'wb')
         outfile.write(z.read(name))
         outfile.close()
-    fh.close()
 
     # Check if it is vector or raster
     # if it has a .shp file, it is vector :)
