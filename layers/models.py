@@ -44,7 +44,6 @@ def layer_handler(sender, instance, *args, **kwargs):
     """
  
     instance.slug = slugify(instance.name)
-    zip_path = instance.original.path
 
     # Make a folder with the slug name
     # and create a 'raw' subdirectory to hold the files
