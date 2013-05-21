@@ -6,7 +6,6 @@ from django.template.defaultfilters import slugify
 import zipfile
 import os, errno
 import glob
-from django.template.defaultfilters import slugify
 
 class Layer(models.Model):
     name = models.CharField(max_length=255)
