@@ -34,15 +34,13 @@ def create_folder(path):
             pass
         else: raise
 
-
-
 @receiver(models.signals.pre_save, sender=Layer)
 def layer_handler(sender, instance, *args, **kwargs):
     """
     Post process the uploaded layer
     Get the bounding box information and save it with the model
     """
- 
+
     instance.slug = slugify(instance.name)
 
     # Make a folder with the slug name
@@ -63,11 +61,11 @@ def layer_handler(sender, instance, *args, **kwargs):
         outfile.write(z.read(name))
         outfile.close()
     fh.close()
-     
+
     # Check if it is vector or raster
     # if it has a .shp file, it is vector :)
     os.chdir(zip_out)
-    shapefiles = glob.glob('*.shp') 
+    shapefiles = glob.glob('*.shp')
 
     if len(shapefiles) > 0:
         # this means it is a vector
