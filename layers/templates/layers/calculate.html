@@ -29,7 +29,11 @@
             $.getJSON('{{ geojson }}', function(geojsonFeature){
                 var myLayer = L.geoJson().addTo(map);
                 myLayer.addData(geojsonFeature);
-            });
+                map.fitBounds(myLayer.getBounds());
+			});
+
+            
+
         }
     </script>
 {% endblock %}
