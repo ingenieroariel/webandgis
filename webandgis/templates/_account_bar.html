@@ -2,3 +2,7 @@
     <li><a href="/">Home</a></li>
     <li><a href="{% url 'layers:index' %}">Layers</a></li>
 </ul>
+
+<script>
+    $('ul.nav > li > a[href="' + document.location.pathname + '"]').parent().addClass('active');
+</script>
