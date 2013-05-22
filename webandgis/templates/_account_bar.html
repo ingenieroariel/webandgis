@@ -4,5 +4,13 @@
 </ul>
 
 <script>
-    $('ul.nav > li > a[href="' + document.location.pathname + '"]').parent().addClass('active');
+    String.prototype.rsplit = function(sep, maxsplit) {
+        var split = this.split(sep);
+        return maxsplit ? [ split.slice(0, -maxsplit).join(sep) ].
+                                concat(split.slice(-maxsplit)) : split;
+    }
+
+    resource = document.location.pathname.rsplit('/',-2);
+    if (resource.length > 1) resource = resource[0] + '/';
+    $('ul.nav > li > a[href="' + resource + '"]').parent().addClass('active');
 </script>
