@@ -1,0 +1,42 @@
+{% extends "site_base.html" %}
+
+{% block body %}
+
+<form class="form-horizontal" action="/users/signin/" method="post">{% csrf_token %}
+    {% if next %}
+        <input type="hidden" name="next" value="{{ next }}" />
+    {% endif %}
+
+    {% if form.errors %}
+        <div class="alert alert-error">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Your username and password didn't match.</strong>
+        </div>
+    {% endif %}
+
+
+    <div class="control-group">
+        <label class="control-label" for="inputUsername">Username</label>
+        <div class="controls">
+            <input type="text" id="inputUsername" name="username"
+                value="{{ username }}" placeholder="Username">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputPassword">Password</label>
+        <div class="controls">
+            <input type="password" id="inputPassword" name="password"
+                value="" placeholder="Password">
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <label class="checkbox">
+                <input type="checkbox"> Remember me
+            </label>
+            <button type="submit" class="btn">Sign in</button>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

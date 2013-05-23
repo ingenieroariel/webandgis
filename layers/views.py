@@ -7,9 +7,9 @@ from safe.api import read_layer
 from safe.api import calculate_impact
 from safe.impact_functions.inundation.flood_OSM_building_impact import FloodBuildingImpactFunction
 from subprocess import call
-
 import glob
 import os
+from django.contrib.auth.decorators import login_required
 
 def index(request):
     layers = Layer.objects.all()
@@ -28,7 +28,7 @@ def get_layer_data(layer_name):
      layer_file = os.path.join(layer_path, filename)
      return read_layer(layer_file)
 
-
+@login_required(redirect_field_name='next')
 def calculate(request):
     """Calculates the buildings affected by flood.
     """
@@ -56,5 +56,6 @@ def calculate(request):
 
     context = impact_file.keywords
     context['geojson'] = impact_geojson
+    context['user'] = request.user
 
     return render(request, 'layers/calculate.html', context)

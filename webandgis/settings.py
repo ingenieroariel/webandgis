@@ -122,11 +122,13 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.admindocs',
 
+    # Created apps
+    'users',
+    'layers',
+
     # Third party apps
     'leaflet',
     'pinax_theme_bootstrap',
-
-    'layers',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -157,3 +159,7 @@ LOGGING = {
         },
     }
 }
+
+# Constants used for site authentication
+LOGIN_URL = '/users/signin/'
+LOGIN_REDIRECT_URL = '/'
