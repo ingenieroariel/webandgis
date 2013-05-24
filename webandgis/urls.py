@@ -10,6 +10,7 @@ admin.autodiscover()
 urlpatterns = patterns('',
     url(r"^$", TemplateView.as_view(template_name="homepage.html"), name="home"),
     url(r'^layers/', include('layers.urls', namespace='layers')),
+    url(r'^users/', include('users.urls', namespace='users')),
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
     url(r'^admin/', include(admin.site.urls)),
 )

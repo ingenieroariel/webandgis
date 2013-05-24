@@ -3,6 +3,18 @@
     <li><a href="{% url 'layers:index' %}">Layers</a></li>
 </ul>
 
+{% if not user.is_authenticated %}
+    <h4 class="pull-right">
+        <a href="#">Sign-up</a> |
+        <a href="{% url 'users:signin' %}">Sign-in</a>
+    </h4>
+{% else %}
+    <h4 class="pull-right">
+        Welcome {{ user.username.capitalize }}! |
+        <a href="{% url 'users:signout' %}">Sign-out</a>
+    </h4>
+{% endif %}
+
 <script>
     String.prototype.rsplit = function(sep, maxsplit) {
         var split = this.split(sep);
