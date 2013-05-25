@@ -23,7 +23,6 @@
             
             // Pulls GeoJSON data and adds layer to the basemap
             $.getJSON('{{ geojson }}', function(geojsonFeature){
-                alert('{{ geojson }}')
                 var myLayer = L.geoJson().addTo(map);
                 myLayer.addData(geojsonFeature);
 
