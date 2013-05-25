@@ -6,6 +6,7 @@ from django.template.defaultfilters import slugify
 import zipfile
 import os, errno
 import glob
+from subprocess import call
 
 class Layer(models.Model):
     name = models.CharField(max_length=255)
@@ -72,5 +73,10 @@ def layer_handler(sender, instance, *args, **kwargs):
         layer = ds[0]
         extent = layer.extent.tuple
         instance.bbox = ",".join(["%s" % x for x in extent])
+
+        #Create GeoJSON file
+        output = os.path.join(zip_out, 'geometry.json')
+        call(['ogr2ogr', '-f', 'GeoJSON',
+          output, shapefile])
 
     # Render the tiles (if possible)
