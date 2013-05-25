@@ -18,6 +18,13 @@ def index(request):
 
 def detail(request, layer_slug):
     layer = get_object_or_404(Layer, slug=layer_slug)
+   
+    #get GeoJSON file
+    layer_folder = os.path.join(settings.MEDIA_ROOT, 'layers', layer_slug)
+    geometryJSON = os.path.join(layer_folder, 'raw', 'geometry.json') 
+    context['layer'] = layer 
+    context['geojson'] = geometryJSON 
+
     return render(request, 'layers/detail.html', {'layer': layer})
 
 def get_layer_data(layer_name):
