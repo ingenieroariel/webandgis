@@ -1,13 +1,16 @@
+import zipfile
+import os
+import errno
+import glob
+
 from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.dispatch import receiver
 from django.conf import settings
 from django.contrib.gis.gdal import DataSource
 from django.template.defaultfilters import slugify
-import zipfile
-import os, errno
-import glob
 from subprocess import call
+
 
 class OverwriteStorage(FileSystemStorage):
 
@@ -15,6 +18,7 @@ class OverwriteStorage(FileSystemStorage):
         if self.exists(name):
             os.remove(os.path.join(settings.MEDIA_ROOT, name))
         return name
+
 
 class Layer(models.Model):
     name = models.CharField(max_length=255)
@@ -24,7 +28,7 @@ class Layer(models.Model):
     original = models.FileField(storage=OverwriteStorage(),
                                 upload_to='uploads', null=True, blank=True,
                                 help_text="""Zip file with either geotiff and
-                                        projection or shapefiles and friends""")
+                                projection or shapefiles and friends""")
     style = models.TextField(null=True, blank=True)
     # type = models.CharField(max_length=255)
 
@@ -33,9 +37,9 @@ class Layer(models.Model):
 
     def save(self, force_insert=False, force_update=False):
         slug = slugify(self.name)
-        
+
         # Deletes an existing layer with the same slug name
-        num_results = Layer.objects.filter(slug = slug).count()
+        num_results = Layer.objects.filter(slug=slug).count()
         if num_results:
             l = Layer.objects.get(slug=slug)
             l.delete()
@@ -43,13 +47,17 @@ class Layer(models.Model):
         self.slug = slug
         super(Layer, self).save(force_insert, force_update)
 
+
 def create_folder(path):
     try:
         os.makedirs(path)
-    except OSError as exc: # Python >2.5
+    # This only works for Python > 2.5
+    except OSError as exc:
         if exc.errno == errno.EEXIST and os.path.isdir(path):
             pass
-        else: raise
+        else:
+            raise
+
 
 @receiver(models.signals.pre_save, sender=Layer)
 def layer_handler(sender, instance, *args, **kwargs):
@@ -93,7 +101,6 @@ def layer_handler(sender, instance, *args, **kwargs):
 
         #Create GeoJSON file
         output = os.path.join(zip_out, 'geometry.json')
-        call(['ogr2ogr', '-f', 'GeoJSON',
-          output, shapefile])
+        call(['ogr2ogr', '-f', 'GeoJSON', output, shapefile])
 
     # Render the tiles (if possible)

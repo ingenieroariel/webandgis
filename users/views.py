@@ -4,6 +4,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django import forms
 
+
 @csrf_exempt
 def signin(request):
     username = password = ''
@@ -18,6 +19,7 @@ def signin(request):
                 return HttpResponseRedirect('/')
 
     return render_to_response('users/signin.html')
+
 
 def signout(request):
     logout(request)
