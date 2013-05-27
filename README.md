@@ -9,13 +9,19 @@ A sample project to learn to build web based gis systems.
 Installation instructions
 -------------------------
 
-In the root of the project, do:
+Before installing, you need to install the Geospatial Data Abstraction Library (GDAL), in Ubuntu, you can do the following::
+
+```
+sudo apt-get install gdal-bin
+```
+
+After that, you just need to install webgis, in the root of the project, do:
 
 ```
  sudo pip install -e .
 ```
 
-This will install Django, Inasafe (python-safe) and any other dependencies
+This will install Django, Inasafe (python-safe) and any other dependencies.
 
 
 -----
