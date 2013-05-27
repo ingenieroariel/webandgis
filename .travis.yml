@@ -12,7 +12,7 @@ branches:
 
 install:
   - sudo pip install -e . --use-mirrors
-  - sudo pip install -e pep8
+  - sudo pip install pep8
 
 script:
   - pep8 .
