@@ -1,0 +1,19 @@
+language: python
+
+python:
+  - "2.7"
+
+virtualenv:
+  system_site_packages: true
+
+branches:
+  only:
+    - master 
+
+install:
+  - sudo pip install -e . --use-mirrors
+  - sudo pip install -e pep8
+
+script:
+  - pep8 .
+  - python manage.py validate
