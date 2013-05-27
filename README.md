@@ -15,22 +15,14 @@ In the root of the project, do:
  sudo pip install -e .
 ```
 
-------------------
-Inasafe workaround
-------------------
+This will install Django, Inasafe (python-safe) and any other dependencies
 
-If you have inasafe already installed in qgis, you can do the following to enable it's use from python scripts:
 
-```
-sudo ln -s ~/.qgis/python/plugins/inasafe/safe /usr/lib/python2.7/dist-packages/safe
-sudo ln -s ~/.qgis/python/plugins/inasafe/third_party /usr/lib/python2.7/dist-packages/third_party
-```
+-----
+Other
+-----
 
-Note: If you run those commands twice, an extra folder may be created and you will get import errors.
-
------------------------------
-Optional softwares to install
------------------------------
+Optional software to install:
 
 1. Sublime-text : Makes editing of codes/files easier
 
