@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.dispatch import receiver
 from django.conf import settings
@@ -7,16 +8,24 @@ import zipfile
 import os, errno
 import glob
 
+class OverwriteStorage(FileSystemStorage):
+
+    def get_available_name(self, name):
+        if self.exists(name):
+            os.remove(os.path.join(settings.MEDIA_ROOT, name))
+        return name
+
 class Layer(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(editable=False)
     bbox = models.CharField(max_length=255, null=True, blank=True)
-    original = models.FileField(upload_to='uploads', null=True, blank=True,
+    original = models.FileField(storage=OverwriteStorage(),
+                                upload_to='uploads', null=True, blank=True,
                                 help_text="""Zip file with either geotiff and
                                         projection or shapefiles and friends""")
-#    type = models.CharField(max_length=255)
     style = models.TextField(null=True, blank=True)
+    # type = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.name
