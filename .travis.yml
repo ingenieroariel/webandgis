@@ -13,8 +13,9 @@ branches:
 install:
   - sudo apt-get install gdal-bin
   - sudo pip install -e . --use-mirrors
-  - sudo pip install pep8
+  - sudo pip install pep8 pylint
 
 script:
   - pep8 .
+  - pylint --rcfile=.pylint.rc webandgis layers users --report=no
   - python manage.py validate

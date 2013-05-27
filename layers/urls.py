@@ -1,9 +1,9 @@
 from django.conf.urls import patterns, url
-from layers import views
+from layers.views import index, calculate, detail
 
 urlpatterns = patterns(
     '',
-    url(r'^$', views.index, name='index'),
-    url(r'calculate/$', views.calculate, name='calculate'),
-    url(r'^(?P<layer_slug>[\w\-]+)/$', views.detail, name='detail'),
+    url(r'^$', index, name='index'),
+    url(r'calculate/$', calculate, name='calculate'),
+    url(r'^(?P<layer_slug>[\w\-]+)/$', detail, name='detail'),
 )

@@ -57,8 +57,7 @@ def layer_handler(sender, instance, *args, **kwargs):
     instance.slug = slugify(instance.name)
 
     # Deletes an existing layer with the same slug name
-    same_name_layers= Layer.objects.filter(slug=instance.slug)
-    for layer in same_name_layers:
+    for layer in Layer.objects.filter(slug=instance.slug):
         layer.delete()
 
     # Make a folder with the slug name
@@ -69,10 +68,10 @@ def layer_handler(sender, instance, *args, **kwargs):
     create_folder(zip_out)
 
     # Iterate over the files in the zip and create them in the raw folder.
-    z = zipfile.ZipFile(instance.original)
-    for name in z.namelist():
+    the_zip = zipfile.ZipFile(instance.original)
+    for name in the_zip.namelist():
         outfile = open(os.path.join(zip_out, name), 'wb')
-        outfile.write(z.read(name))
+        outfile.write(the_zip.read(name))
         outfile.close()
 
     # Check if it is vector or raster
@@ -87,10 +86,8 @@ def layer_handler(sender, instance, *args, **kwargs):
         shapefile = shapefiles[0]
 
         # Use ogr to inspect the file and get the bounding box
-        ds = DataSource(shapefile)
-        layer = ds[0]
-        extent = layer.extent.tuple
-        instance.bbox = ",".join(["%s" % x for x in extent])
+        dse = DataSource(shapefile)
+        instance.bbox = ",".join(["%s" % x for x in dse[0].extent.tuple])
 
         #Create GeoJSON file
         output = os.path.join(zip_out, 'geometry.json')

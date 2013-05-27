@@ -1,4 +1,6 @@
-# Django settings for webandgis project.
+"""
+Django settings for webandgis project
+"""
 import os
 
 PROJECT_ROOT = os.path.abspath(

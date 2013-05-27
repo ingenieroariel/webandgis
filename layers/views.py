@@ -1,5 +1,6 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.core.urlresolvers import reverse
+import glob
+import os
+
 from django.shortcuts import render, get_object_or_404
 from layers.models import Layer
 from django.conf import settings
@@ -8,8 +9,6 @@ from safe.api import calculate_impact
 from safe.impact_functions.inundation.flood_OSM_building_impact \
     import FloodBuildingImpactFunction
 from subprocess import call
-import glob
-import os
 from django.contrib.auth.decorators import login_required
 
 
@@ -24,9 +23,9 @@ def detail(request, layer_slug):
 
     #get GeoJSON file
     layer_folder = os.path.join(settings.MEDIA_URL, 'layers', layer_slug)
-    geometryJSON = os.path.join(layer_folder, 'raw', 'geometry.json')
+    geometry_json = os.path.join(layer_folder, 'raw', 'geometry.json')
     context = {'layer': layer}
-    context['geojson'] = geometryJSON
+    context['geojson'] = geometry_json
 
     return render(request, 'layers/detail.html', context)
 
