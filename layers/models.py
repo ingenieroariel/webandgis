@@ -1,3 +1,4 @@
+from django.core.files.storage import FileSystemStorage
 from django.db import models
 from django.dispatch import receiver
 from django.conf import settings
@@ -8,22 +9,35 @@ import os, errno
 import glob
 from subprocess import call
 
+class OverwriteStorage(FileSystemStorage):
+
+    def get_available_name(self, name):
+        if self.exists(name):
+            os.remove(os.path.join(settings.MEDIA_ROOT, name))
+        return name
+
 class Layer(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     slug = models.SlugField(editable=False)
     bbox = models.CharField(max_length=255, null=True, blank=True)
-    original = models.FileField(upload_to='uploads', null=True, blank=True,
+    original = models.FileField(storage=OverwriteStorage(),
+                                upload_to='uploads', null=True, blank=True,
                                 help_text="""Zip file with either geotiff and
                                         projection or shapefiles and friends""")
-#    type = models.CharField(max_length=255)
     style = models.TextField(null=True, blank=True)
+    # type = models.CharField(max_length=255)
 
     def __unicode__(self):
         return self.name
 
     def save(self, force_insert=False, force_update=False):
-        self.slug = slugify(self.name)
+        slug = slugify(self.name)
+        # Deletes an existing layer with the same slug name
+        l = Layer.objects.get(slug=slug)
+        l.delete()
+
+        self.slug = slug
         super(Layer, self).save(force_insert, force_update)
 
 def create_folder(path):
