@@ -3,6 +3,8 @@ webandgis
 
 A sample project to learn to build web based gis systems.
 
+[![Build Status](https://travis-ci.org/ingenieroariel/webandgis.png?branch=master)](https://travis-ci.org/ingenieroariel/webandgis)
+
 -------------------------
 Installation instructions
 -------------------------
