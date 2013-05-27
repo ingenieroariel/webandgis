@@ -11,6 +11,7 @@ branches:
     - master 
 
 install:
+  - sudo apt-get install gdal-bin
   - sudo pip install -e . --use-mirrors
   - sudo pip install pep8
 
