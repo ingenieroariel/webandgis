@@ -35,18 +35,6 @@ class Layer(models.Model):
     def __unicode__(self):
         return self.name
 
-    def save(self, force_insert=False, force_update=False):
-        slug = slugify(self.name)
-
-        # Deletes an existing layer with the same slug name
-        num_results = Layer.objects.filter(slug=slug).count()
-        if num_results:
-            l = Layer.objects.get(slug=slug)
-            l.delete()
-
-        self.slug = slug
-        super(Layer, self).save(force_insert, force_update)
-
 
 def create_folder(path):
     try:
@@ -67,6 +55,11 @@ def layer_handler(sender, instance, *args, **kwargs):
     """
 
     instance.slug = slugify(instance.name)
+
+    # Deletes an existing layer with the same slug name
+    same_name_layers= Layer.objects.filter(slug=instance.slug)
+    for layer in same_name_layers:
+        layer.delete()
 
     # Make a folder with the slug name
     # and create a 'raw' subdirectory to hold the files
