@@ -33,9 +33,12 @@ class Layer(models.Model):
 
     def save(self, force_insert=False, force_update=False):
         slug = slugify(self.name)
+        
         # Deletes an existing layer with the same slug name
-        l = Layer.objects.get(slug=slug)
-        l.delete()
+        num_results = Layer.objects.filter(slug = slug).count()
+        if num_results:
+            l = Layer.objects.get(slug=slug)
+            l.delete()
 
         self.slug = slug
         super(Layer, self).save(force_insert, force_update)
