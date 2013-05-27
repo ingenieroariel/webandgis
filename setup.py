@@ -21,6 +21,7 @@ setup(
         'Django>=1.5',
         'django-leaflet',
         'pinax-theme-bootstrap',
+        'python-safe>=1.1.2',
     ],
     packages=find_packages(),
     include_package_data=True,
