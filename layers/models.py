@@ -31,7 +31,12 @@ class Layer(models.Model):
         return self.name
 
     def save(self, force_insert=False, force_update=False):
-        self.slug = slugify(self.name)
+        slug = slugify(self.name)
+        # Deletes an existing layer with the same slug name
+        l = Layer.objects.get(slug=slug)
+        l.delete()
+
+        self.slug = slug
         super(Layer, self).save(force_insert, force_update)
 
 def create_folder(path):
