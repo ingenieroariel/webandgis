@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<form class="form-horizontal" action="/users/signin/" method="post">{% csrf_token %}
+<form class="form-horizontal" action="/users/login/" method="post">{% csrf_token %}
     {% if next %}
         <input type="hidden" name="next" value="{{ next }}" />
     {% endif %}
