@@ -54,6 +54,7 @@ def calculate(request):
     buildings.keywords['subcategory'] = 'structure'
     flood.keywords['category'] = 'hazard'
     flood.keywords['subcategory'] = 'flood'
+    flood.keywords['unit'] = 'wet/dry'
 
     impact_function = FloodBuildingImpactFunction
     # run analisys
