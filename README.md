@@ -24,6 +24,16 @@ After that, you just need to install webgis, in the root of the project, do:
 This will install Django, Inasafe (python-safe) and any other dependencies.
 
 
+Then, you need to create a local database and run the server:
+
+```
+python manage.py syncdb
+python manage.py runserver
+```
+
+And navigate to: http://localhost:8000/
+
+
 -----
 Other
 -----
