@@ -19,8 +19,8 @@ setup(
     license='MIT, see LICENSE file.',
     install_requires=[
         'Django>=1.5',
-        'django-leaflet',
-        'pinax-theme-bootstrap',
+        'django-leaflet==0.14.1',
+        'pinax-theme-bootstrap==5.5.1',
         'python-safe>=1.1.2',
     ],
     packages=find_packages(),
