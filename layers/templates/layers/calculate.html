@@ -26,8 +26,10 @@
 
             // Pulls GeoJSON data and adds layer to the basemap
             $.getJSON('{{ geojson }}', function(geojsonFeature){
-                var myLayer = L.geoJson().addTo(map);
-                myLayer.addData(geojsonFeature);
+
+                var myLayer = L.geoJson(geojsonFeature,
+                                        {style: {"color": "red"}}).addTo
+              (map);
 
                 // Zooms map to geoJSON layer's bounds
                 map.fitBounds(myLayer.getBounds());
