@@ -10,7 +10,7 @@ from safe.impact_functions.inundation.flood_OSM_building_impact \
     import FloodBuildingImpactFunction
 from subprocess import call
 from django.contrib.auth.decorators import login_required
-
+import qgis
 
 def index(request):
     layers = Layer.objects.all()

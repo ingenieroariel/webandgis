@@ -43,3 +43,7 @@ uploads
 
 # Extracted .zip files
 media/
+
+# Ignore python virtualenv
+venv
+
