@@ -110,7 +110,7 @@ ROOT_URLCONF = 'webandgis.urls'
 WSGI_APPLICATION = 'webandgis.wsgi.application'
 
 TEMPLATE_DIRS = (
-    os.path.join(PROJECT_ROOT, 'webandgis', 'templates')
+    os.path.join(PROJECT_ROOT, 'webandgis', 'templates'),
 )
 
 INSTALLED_APPS = (
