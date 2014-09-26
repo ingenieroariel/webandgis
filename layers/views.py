@@ -6,11 +6,10 @@ from layers.models import Layer
 from django.conf import settings
 from safe.api import read_layer
 from safe.api import calculate_impact
-from safe.impact_functions.inundation.flood_OSM_building_impact \
-    import FloodBuildingImpactFunction
+from safe.impact_functions.inundation.flood_polygon_roads import FloodVectorRoadsExperimentalFunction
 from subprocess import call
 from django.contrib.auth.decorators import login_required
-import qgis
+
 
 def index(request):
     layers = Layer.objects.all()
@@ -46,20 +45,20 @@ def calculate(request):
 
     output = os.path.join(settings.MEDIA_ROOT, 'layers', 'impact.json')
 
-    buildings = get_layer_data('Buildings')
+    roads = get_layer_data('Roads')
     flood = get_layer_data('Flood')
 
     # assign the required keywords for inasafe calculations
-    buildings.keywords['category'] = 'exposure'
-    buildings.keywords['subcategory'] = 'structure'
+    roads.keywords['category'] = 'exposure'
+    roads.keywords['subcategory'] = 'road'
     flood.keywords['category'] = 'hazard'
     flood.keywords['subcategory'] = 'flood'
     flood.keywords['unit'] = 'wet/dry'
 
-    impact_function = FloodBuildingImpactFunction
+    impact_function = FloodVectorRoadsExperimentalFunction
     # run analisys
     impact_file = calculate_impact(
-        layers=[buildings, flood],
+        layers=[roads, flood],
         impact_fcn=impact_function
     )
 
