@@ -18,6 +18,9 @@ develop-eggs
 lib
 lib64
 
+# Pycharm project file
+.idea
+
 # Installer logs
 pip-log.txt
 
@@ -40,5 +43,7 @@ uploads
 
 # Extracted .zip files
 media/
+
+# Ignore python virtualenv
 venv
-.idea
+
